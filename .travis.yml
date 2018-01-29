@@ -2,14 +2,22 @@ sudo: required
 language: python
 services:
 - docker
+
+install:
+  - echo "install nothing!" # put your normal pre-testing installs here
+
+script:
+  - echo "no tests!" # put your normal testing scripts here
+
+
 after_success:
 - docker --version
 - pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
 - eval $(aws ecr get-login --no-include-email --region us-east-1)
 - docker build -t docker-wordcount .
-- docker tag docker-wordcount:latest $AWS_ACCOUNT_NUMBER.dkr.ecr.us-east-1.amazonaws.com/word-test:latest
-- docker push $AWS_ACCOUNT_NUMBER.dkr.ecr.us-east-1.amazonaws.com/word-test:latest
+- docker tag docker-wordcount:latest 075354070244.dkr.ecr.us-east-1.amazonaws.com/word-test:latest
+- docker push 075354070244.dkr.ecr.us-east-1.amazonaws.com/word-test:latest
 env:
   global:
   - secure: MOGm9uEk6kZ2BmbBUHTDZ5dD8XBzPj/bQXPg4EhLDffRu9iwmYhcaO2FNCP1mm751WjyIAJxKzWqD3v8TFdS7/GD+2y1hZl3cTBgUjX7VsbyyE8UF+1zrSB/LErmTDsVSaUZNxdyM4mTT/DOaLtHwCNiQeu4bPl0qruofaYCxWvL35xkNprtenj+KShkb2QYeVtFLcyI2zQmQ4EDvtjKX1g1eTOxIxlB7u6+a0FWZZgvUGrXxa2WOxXNawkfFhSot0E41/KRQadE7l7HnE0Qf3A7Y6Hv7GsI7E6NbedGviO8VGhrGdgG3eimagTEKnNM89pJjEfAyWv7yCXcu22dSzN3f/V/hBLyXMciql7IbzFaDRKdry8GFeNJ+JT6+bEgbGz13D+4UI7KxLvsdHAqhVjefA20tTqnLH9UqCLJfiLNNIpLS8HpRYrGzIfAao9A0sQoV4xBXJ041HSNjce1V26Yj9VXg06GdpNf33nFrynxSaLaGMouYMGCZhFPDeoLCc5IAJUXm6QsP3X6OCFWbVMK96Kxu+c5/bDHq+omx3dHKi66fflpliRMrB9HjPhRgA9im9fzpt7GW+ywbLNUxUiI1mBkAs7+KSxem6JoRwkoYK5mkKdckUVh+NDKgteoC5tL4NurJzql84vf4k68uLDwPAlrFEeGPCq7HsdzS9k=
